@@ -13,7 +13,7 @@ class Object{
 public:
 	Object();
 	Object(const Object &object) ; 
-	Object(int column_position , int row_position , float object_life) ; 
+	Object(int column_position , int row_position , float object_life , _GAME_SYMBOLS_ENUM _type) ; 
 	
 	virtual ~Object() ;
 
@@ -29,35 +29,68 @@ public:
 
 	
 	/*Object type*/
-	virtual _GAME_SYMBOLS_ENUM getType() const = 0 ;   
+	virtual  _GAME_SYMBOLS_ENUM getType() const {return _type;} ;   
 
 
 private:
 	int _posX ; //position on columns 
 	int _posY ; //position on rows 
-	float _life ; // life of the object , everything is destructible
-		
+	float _life ; // life of the object , everything is destructible	
+	_GAME_SYMBOLS_ENUM _type  ; 
 };
 
 
 
-
 /*************************************************************************************************************/
-/*Blocked Tile */
+/*Blocked tile */
+
 class Wall : public Object{
 public:
 	Wall() ; 
 	Wall(int x , int y , float life); 
 	virtual ~Wall() ;
-	virtual _GAME_SYMBOLS_ENUM getType() const ; 
 
+private:
+
+};
+
+
+/*************************************************************************************************************/
+/*Gates link two rooms with each others*/
+
+class Gate : public Object{
+public:
+	Gate() ; 
+	Gate(int x , int y , float life) ; 
+	virtual ~Gate();
+	virtual _GAME_SYMBOLS_ENUM getType() const {return _type ; } ; 
+
+private:
+	
 
 };
 
 
 
 /*************************************************************************************************************/
-class Chest : public Object{
+/*Objects that can be stored in inventories*/
+
+class Stockable : public Object{
+public:
+	Stockable() ; 
+	Stockable(int x , int y , float life) ; 
+	virtual ~Stockable();
+
+
+	
+
+};
+
+
+
+/*************************************************************************************************************/
+
+class Chest : public Stockable{
 public:
 	Chest();
 	Chest(int x , int y , float life) ; 
@@ -65,10 +98,7 @@ public:
 	virtual _GAME_SYMBOLS_ENUM getType() const ; 
 
 private:
-	Inventory inventory ; 
-
-
-
+	Inventory _inventory;
 
 
 };

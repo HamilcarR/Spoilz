@@ -54,7 +54,7 @@ Chest::Chest(){
 
 
 
-Chest::Chest(int x , int y , float life):Object(x , y , life){
+Chest::Chest(int x , int y , float life):Stockable(x , y , life){
 
 
 }
@@ -71,13 +71,27 @@ Chest::~Chest(){
 
 
 
+/*************************************************************************************************************/
+
+Stockable::Stockable(){
+
+
+}
+
+
+Stockable::Stockable(int x , int y , float life) : Object(x , y , life) {
+
+
+}
+
+Stockable::~Stockable(){
+
+
+}
 
 
 
-
-
-
-
+/*************************************************************************************************************/
 
 
 

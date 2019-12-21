@@ -1,1 +1,16 @@
-#include "../includes/Inventory.h" 
+#include "../includes/Inventory.h"
+
+
+Inventory::Inventory(){
+
+
+}
+
+Inventory::~Inventory(){
+
+
+}
+
+
+
+
