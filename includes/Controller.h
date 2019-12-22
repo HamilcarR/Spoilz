@@ -1,5 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
+#include "Constants.h" 
 #include "View.h" 
 #include "Grid.h"
 
@@ -7,21 +8,16 @@
 class View ; 
 class Controller{
 public:
-	Controller();
-	Controller(View *v) ; 
-	virtual ~Controller(); 
-		
-	void init_controller(); 
+	Controller(std::unique_ptr<View> v);
+	virtual ~Controller(); 	
+	void initController(); 
 
 
 private:
-	void generate_grid() ; 
-	void player_control() ; 
-	void init_IA() ; 
+	void generateGrid() ; 
+	void playerControl() ; 
+	void initIA() ; 
 	
-
-
-
 
 	std::unique_ptr<View> _view ; 
 

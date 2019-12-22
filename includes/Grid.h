@@ -2,13 +2,10 @@
 #define GRID_H
 #include "Constants.h" 
 #include "GameObjects.h" 
+#include "ObjectDistribution.h"
 
 static constexpr int GRID_WIDTH = 10 ; 
 static constexpr int GRID_HEIGHT = 10 ;
-
-
-
-
 
 /*tile type*/
 class Tile{
@@ -39,7 +36,8 @@ public:
 
 private:
 	std::vector<std::vector<Tile>> _tiles;
-	std::vector<Gate> _gates ; 
+	std::vector<Gate> _gates ;
+	ObjectDistribution object_distrib ; 
 };
 
 
@@ -53,8 +51,8 @@ public:
 	Grid();
 	virtual ~Grid() ; 
 	
-	std::vector& getGrid() const {return _grid;} ;
-	OPERATION_STATUS addRoom(Room &room) {_grid.push_back(room); } ; 
+	std::stack<Room> getGrid() const {return _grid;} ;
+	void addRoom(Room &room) {_grid.push(room); } ; 
 
 
 private:

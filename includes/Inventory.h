@@ -3,7 +3,7 @@
 #include "Constants.h" 
 #include "GameObjects.h" 
 
-
+class Stockable ; 
 class Inventory{
 public:
 	Inventory();	

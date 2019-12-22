@@ -2,7 +2,7 @@ let SessionLoad = 1
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd ~/Desktop/Projects/Nethack
+cd ~/Desktop/Projects/Spoilz
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -19,7 +19,7 @@ badd +0 includes/GameObjects.h
 badd +0 sources/GameObject.cpp
 badd +0 includes/Controller.h
 badd +0 sources/Controller.cpp
-badd +0 includes/Inventory.h
+badd +6 includes/Inventory.h
 badd +0 sources/Inventory.cpp
 argglobal
 %argdel
@@ -75,11 +75,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 7 - ((6 * winheight(0) + 30) / 61)
+let s:l = 39 - ((38 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-7
+39
 normal! 0
 wincmd w
 argglobal
@@ -93,12 +93,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 23 - ((22 * winheight(0) + 30) / 61)
+let s:l = 18 - ((17 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-23
-normal! 0
+18
+normal! 046|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 135) / 270)
 exe 'vert 2resize ' . ((&columns * 134 + 135) / 270)
@@ -127,11 +127,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 60 - ((30 * winheight(0) + 30) / 61)
+let s:l = 61 - ((31 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-60
+61
 normal! 0
 wincmd w
 argglobal
@@ -145,17 +145,16 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 70 - ((23 * winheight(0) + 30) / 61)
+let s:l = 73 - ((25 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-70
-normal! 0
+73
+normal! 032|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 135) / 270)
 exe 'vert 2resize ' . ((&columns * 134 + 135) / 270)
-tabedit sources/Inventory.cpp
+tabedit includes/Inventory.h
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -180,15 +179,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 30) / 61)
+let s:l = 6 - ((5 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 035|
+6
+normal! 018|
 wincmd w
 argglobal
-if bufexists("includes/Inventory.h") | buffer includes/Inventory.h | else | edit includes/Inventory.h | endif
+if bufexists("sources/Inventory.cpp") | buffer sources/Inventory.cpp | else | edit sources/Inventory.cpp | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -198,11 +197,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 6 - ((5 * winheight(0) + 30) / 61)
+let s:l = 10 - ((9 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-6
+10
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 135) / 270)
@@ -232,12 +231,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 30) / 61)
+let s:l = 8 - ((7 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 036|
+8
+normal! 0
 wincmd w
 argglobal
 if bufexists("includes/Controller.h") | buffer includes/Controller.h | else | edit includes/Controller.h | endif
@@ -250,12 +249,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 22 - ((21 * winheight(0) + 30) / 61)
+let s:l = 24 - ((23 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-22
-normal! 028|
+24
+normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 135) / 270)
 exe 'vert 2resize ' . ((&columns * 134 + 135) / 270)
@@ -382,13 +381,13 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 5 - ((4 * winheight(0) + 30) / 61)
+let s:l = 27 - ((26 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-5
-normal! 017|
-tabnext 3
+27
+normal! 022|
+tabnext 4
 set stal=1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
