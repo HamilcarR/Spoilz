@@ -13,10 +13,10 @@ class ObjectDistribution{
 	
 		}
 
-	}
+	};
 	
 	
-	static float random_coefficient[TILE_CLEAR-TILE_CHEST] ;
+	float random_coefficient[TILE_CLEAR-TILE_CHEST] ;
 	
 
 };

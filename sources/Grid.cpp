@@ -1,6 +1,9 @@
 #include "../includes/Grid.h"
 
+Tile::Tile(){
+	_symbol = Object(0 , 0 , TILE_CLEAR) ; 
 
+}
 
 Tile::Tile(Object &sym){
 	_symbol = sym ; 
@@ -8,12 +11,25 @@ Tile::Tile(Object &sym){
 
 }
 
-Tile::~Tile(){
+
+Tile::Tile(const Tile& tile){
+	_symbol = tile._symbol ; 
 
 
 }
 
 
+
+Tile::~Tile(){
+
+
+}
+
+bool Tile::changeType(Object &new_symbol){
+	_symbol = new_symbol ; 
+
+
+}
 
 
 
@@ -22,7 +38,7 @@ Tile::~Tile(){
 
 
 Room::Room(){
-	initialize_rand();
+
 	_tiles = std::vector<std::vector<Tile>>() ; 
 	for(int i = 0 ; i < GRID_HEIGHT ; i++){
 		_tiles.push_back( std::vector<Tile>()) ; 
@@ -68,8 +84,8 @@ static void put_gates(std::vector<std::vector<Tile>> &tiles) {
 	int max_secret = 0 ; 
 	for(int i = 0 ; i < GRID_HEIGHT ; i++)
 		for(int j = 0 ; j < GRID_WIDTH ; j++){
-			float gate_proba = rand() ; 
-			float secret_proba = rand() ; 
+			float gate_proba = get_rand() ;
+			float secret_proba = get_rand() ; 
 			if(gate_proba < GATE_SPAWN_PROBA && max_gates < MAX_GATE_COUNT - 1){ //creates gates
 				gate_spawned = true ; 
 				Object gate(j , i , TILE_GATE) ; 
@@ -95,12 +111,11 @@ static void put_loot(std::vector<std::vector<Tile>> &tiles) {
 	int max_loot = 0 ; 
 	for(int i = 0 ; i < GRID_HEIGHT ; i++)
 		for(int j = 0 ; j < GRID_WIDTH ; j++){
-			if(tiles[i][j]._symbol.getType() != TILE_CLEAR)
-				break ; 
-			else{
-				
-				int loot_type = rand()%LOOT_TABLE.size()-1 ; 
-				if(rand() < LOOT_PROBA && max_loot < MAX_LOOT_ROOM - 1 ){
+
+			if(tiles[j][i]._symbol.getType() == TILE_CLEAR){
+			
+				int loot_type = rand()%LOOT_TABLE.size()-1 ;
+				if(get_rand() < LOOT_PROBA && max_loot < MAX_LOOT_ROOM - 1 ){
 					Object loot = Object(j , i , LOOT_TABLE[loot_type]) ; 
 					tiles[i][j].changeType(loot);
 					max_loot++ ; 
@@ -121,12 +136,43 @@ void Room::generateRoom(){
 
 }
 
+
+
+
+void Room::describe(){
+
+	for(auto A : _tiles){
+		std::cout << "\n" ; 
+		for(auto B : A){
+		std::cout << SYMBOLS_CHAR[B._symbol.getType()] <<" " ;  
+		}
+	}
+
+}
+
+
 /****************************************************************************************************/
 
 
 
 
+Grid::Grid(){
 
+	initialize_rand();
+	createRoom();
+
+}
+
+Grid::~Grid(){
+
+
+}
+
+void Grid::createRoom(){
+	Room room = Room() ; 
+	addRoom(room) ;
+	room.describe() ; 
+}
 
 
 

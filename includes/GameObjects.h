@@ -1,13 +1,11 @@
 #ifndef GAMEOBJECTS_H
 #define GAMEOBJECTS_H
 #include "Constants.h" 
-#include "Inventory.h" 
 
 
 
 static constexpr float TILE_BLOCKED_HP_MAX = 500.f ;//HP of a wall  
-static constexpr float CHESS_HP_MAX = 500.f ; 
-class Inventory ; 
+static constexpr float CHEST_HP_MAX = 500.f ; 
 
 class Object{
 public:
@@ -84,14 +82,14 @@ public:
 
 
 /*************************************************************************************************************/
-
+class Inventory ; 
 class Chest : public Stockable{
 public:
 	Chest();
 	Chest(int x , int y , float life) ; 
 
 private:
-	Inventory _inventory;
+	Inventory *_inventory;
 
 
 };

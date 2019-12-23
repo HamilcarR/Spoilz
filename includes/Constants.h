@@ -19,13 +19,18 @@
 
 static bool rand_initialized = false ; 
 
-void initialize_rand(){
+static void initialize_rand(){
 	if(!rand_initialized)
 		srand(time(NULL)); 
 	rand_initialized = true ; 
 }
 
+static float get_rand(){
+	
+	return ((float)rand()/(RAND_MAX))  ; 
 
+
+}
 
 /*defines the symbol of an object , and how it will be represented on screen 
  * used as indexes in array , 
@@ -51,6 +56,7 @@ typedef enum  GAME_SYMBOLS_ENUM {
 	TILE_CLEAR   
 } GAME_SYMBOLS_ENUM; 
 
+static const char* SYMBOLS_CHAR =  "c#L/XGSCmMfFKjJB.";
 
 
 //Error check for various operations : adding to data structure , retrieving etc
@@ -62,7 +68,7 @@ typedef enum  OPERATION_STATUS {
 
 static constexpr int MAX_GATE_COUNT = 2 ; // number of max gates in a room 
 static constexpr int MAX_SECRET_GATE_COUNT = 1 ; //secret stuff behind 
-static constexpr float GATE_SPAWN_PROBA = 0.1 ;  // probability of a gate spawning
+static constexpr float GATE_SPAWN_PROBA = 0.5 ;  // probability of a gate spawning
 static constexpr float SECRET_GATE_SPAWN_PROBA = 0.01 ; // probability that a secret gate appears
 static constexpr float LOOT_PROBA = 0.2 ; // probability some loot will appear 
 static constexpr int   MAX_LOOT_ROOM = 7 ;//Max number of loots in a room 

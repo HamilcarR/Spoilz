@@ -11,7 +11,7 @@ CONFIG += debug \
 
 
 linux:{
-QMAKE_CXXFLAGS += -std=c++17 -Wall -Wextra -pedantic
+QMAKE_CXXFLAGS += -std=c++17 -g -Wall -Wextra -pedantic
 LIBS += -lncurses
 
 }

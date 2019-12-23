@@ -7,7 +7,7 @@
  * C : chest
  * E : enemy
  * # : blocked tile*/
-static const char* game_symbols = "@CE#" ; 
+//static const char* game_symbols = "@CE#" ; 
 
 
 void init_curses() ; 

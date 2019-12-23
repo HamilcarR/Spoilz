@@ -3,15 +3,16 @@
 #include "Constants.h" 
 #include "GameObjects.h" 
 
-class Stockable ; 
+
+
+
 class Inventory{
 public:
 	Inventory();	
 	virtual ~Inventory(); 
 	
 
-	/*inventory management : returns -1 if can't operate*/
-	
+	/*inventory management : returns -1 if can't operate*/	
 	virtual OPERATION_STATUS add(Stockable &s); 
 	//retrieves an item , deletes it from the structure
 	virtual Stockable retrieve(Stockable s);

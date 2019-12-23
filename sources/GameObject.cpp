@@ -93,7 +93,7 @@ Stockable::Stockable(){
 }
 
 
-Stockable::Stockable(int x , int y , float life , GANE_SYMBOLS_ENUM type) : Object(x , y , life , type) {
+Stockable::Stockable(int x , int y , float life , GAME_SYMBOLS_ENUM type) : Object(x , y , life , type) {
 
 
 }

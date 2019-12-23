@@ -10,9 +10,10 @@ static constexpr int GRID_HEIGHT = 10 ;
 /*tile type*/
 class Tile{
 public:
-	Tile(Object &object) ; 	
+	Tile() ; 
+	Tile(Object &object) ; 
+	Tile(const Tile &tile) ; 
 	virtual ~Tile() ; 
-	Tile(const Tile& tile){_symbol = tile._symbol ; } ;  
 
 	virtual bool changeType(Object &new_symbol) ; 
 
@@ -32,11 +33,10 @@ public:
 	Room();
 	virtual ~Room();
 	void generateRoom() ; 
-
+	void describe() ; 
 
 private:
 	std::vector<std::vector<Tile>> _tiles;
-	std::vector<Gate> _gates ;
 	ObjectDistribution object_distrib ; 
 };
 
@@ -52,8 +52,8 @@ public:
 	virtual ~Grid() ; 
 	
 	std::stack<Room> getGrid() const {return _grid;} ;
-	void addRoom(Room &room) {_grid.push(room); } ; 
-
+	void addRoom(Room room) {_grid.push(room); } ; 
+	void createRoom() ; 
 
 private:
 	std::stack<Room> _grid ; //this will behave as a stack : randomly generated rooms will be stored 	
