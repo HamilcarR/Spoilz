@@ -4,23 +4,26 @@
 #include "View.h" 
 #include "Grid.h"
 #include "GameObjects.h" 
+#include <ncurses.h>
+#include "PlayerControl.h"
 
+
+typedef std::vector<std::vector<GAME_SYMBOLS_ENUM>> SYMBOLS_MAP ; 
 class View ; 
 class Controller{
 public:
-	Controller(std::unique_ptr<View> v);
+	Controller(View* view );
 	virtual ~Controller(); 	
-	void initController(); 
+	void mainProgram(VIEW_MODE mode); 	
 
 
 private:
-	void generateGrid() ; 
-	void playerControl() ; 
+
 	void initIA() ; 
 	
-
-	std::unique_ptr<View> _view ; 
-
+	Grid _grid ;//add player and IA control 
+	View* _view ; //stack variable 
+	PlayerControl _player ; 
 
 
 

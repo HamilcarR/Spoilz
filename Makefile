@@ -53,20 +53,20 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = sources/Controller.cpp \
-		sources/CursesView.cpp \
 		sources/GameObject.cpp \
 		sources/Grid.cpp \
 		sources/Inventory.cpp \
 		sources/main.cpp \
 		sources/ObjectDistribution.cpp \
+		sources/PlayerControl.cpp \
 		sources/View.cpp 
 OBJECTS       = Controller.o \
-		CursesView.o \
 		GameObject.o \
 		Grid.o \
 		Inventory.o \
 		main.o \
 		ObjectDistribution.o \
+		PlayerControl.o \
 		View.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -318,18 +318,18 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		Hack.pro includes/Constants.h \
 		includes/Controller.h \
-		includes/CursesView.h \
 		includes/GameObjects.h \
 		includes/Grid.h \
 		includes/Inventory.h \
 		includes/ObjectDistribution.h \
+		includes/PlayerControl.h \
 		includes/View.h sources/Controller.cpp \
-		sources/CursesView.cpp \
 		sources/GameObject.cpp \
 		sources/Grid.cpp \
 		sources/Inventory.cpp \
 		sources/main.cpp \
 		sources/ObjectDistribution.cpp \
+		sources/PlayerControl.cpp \
 		sources/View.cpp
 QMAKE_TARGET  = Spoilz
 DESTDIR       = 
@@ -856,8 +856,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents includes/Constants.h includes/Controller.h includes/CursesView.h includes/GameObjects.h includes/Grid.h includes/Inventory.h includes/ObjectDistribution.h includes/View.h $(DISTDIR)/
-	$(COPY_FILE) --parents sources/Controller.cpp sources/CursesView.cpp sources/GameObject.cpp sources/Grid.cpp sources/Inventory.cpp sources/main.cpp sources/ObjectDistribution.cpp sources/View.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents includes/Constants.h includes/Controller.h includes/GameObjects.h includes/Grid.h includes/Inventory.h includes/ObjectDistribution.h includes/PlayerControl.h includes/View.h $(DISTDIR)/
+	$(COPY_FILE) --parents sources/Controller.cpp sources/GameObject.cpp sources/Grid.cpp sources/Inventory.cpp sources/main.cpp sources/ObjectDistribution.cpp sources/PlayerControl.cpp sources/View.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -910,25 +910,20 @@ compiler_clean: compiler_moc_predefs_clean
 Controller.o: sources/Controller.cpp includes/Controller.h \
 		includes/Constants.h \
 		includes/View.h \
-		includes/CursesView.h \
 		includes/Grid.h \
 		includes/GameObjects.h \
-		includes/Inventory.h \
-		includes/ObjectDistribution.h
+		includes/ObjectDistribution.h \
+		includes/PlayerControl.h \
+		includes/Inventory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Controller.o sources/Controller.cpp
 
-CursesView.o: sources/CursesView.cpp includes/CursesView.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CursesView.o sources/CursesView.cpp
-
 GameObject.o: sources/GameObject.cpp includes/GameObjects.h \
-		includes/Constants.h \
-		includes/Inventory.h
+		includes/Constants.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GameObject.o sources/GameObject.cpp
 
 Grid.o: sources/Grid.cpp includes/Grid.h \
 		includes/Constants.h \
 		includes/GameObjects.h \
-		includes/Inventory.h \
 		includes/ObjectDistribution.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Grid.o sources/Grid.cpp
 
@@ -939,26 +934,32 @@ Inventory.o: sources/Inventory.cpp includes/Inventory.h \
 
 main.o: sources/main.cpp includes/Constants.h \
 		includes/GameObjects.h \
-		includes/Inventory.h \
 		includes/View.h \
-		includes/CursesView.h \
 		includes/Controller.h \
 		includes/Grid.h \
-		includes/ObjectDistribution.h
+		includes/ObjectDistribution.h \
+		includes/PlayerControl.h \
+		includes/Inventory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o sources/main.cpp
 
 ObjectDistribution.o: sources/ObjectDistribution.cpp includes/ObjectDistribution.h \
 		includes/Constants.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ObjectDistribution.o sources/ObjectDistribution.cpp
 
+PlayerControl.o: sources/PlayerControl.cpp includes/PlayerControl.h \
+		includes/GameObjects.h \
+		includes/Constants.h \
+		includes/Inventory.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PlayerControl.o sources/PlayerControl.cpp
+
 View.o: sources/View.cpp includes/View.h \
-		includes/CursesView.h \
 		includes/Controller.h \
 		includes/Constants.h \
 		includes/Grid.h \
 		includes/GameObjects.h \
-		includes/Inventory.h \
-		includes/ObjectDistribution.h
+		includes/ObjectDistribution.h \
+		includes/PlayerControl.h \
+		includes/Inventory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o View.o sources/View.cpp
 
 ####### Install

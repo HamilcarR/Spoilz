@@ -4,8 +4,8 @@
 #include "GameObjects.h" 
 #include "ObjectDistribution.h"
 
-static constexpr int GRID_WIDTH = 10 ; 
-static constexpr int GRID_HEIGHT = 10 ;
+static constexpr int GRID_WIDTH = 20 ; 
+static constexpr int GRID_HEIGHT = 20 ;
 
 /*tile type*/
 class Tile{
@@ -34,10 +34,10 @@ public:
 	virtual ~Room();
 	void generateRoom() ; 
 	void describe() ; 
-
+	
+	std::vector<std::vector<Tile>> getTiles(){return _tiles;} ; 
 private:
 	std::vector<std::vector<Tile>> _tiles;
-	ObjectDistribution object_distrib ; 
 };
 
 
@@ -53,6 +53,7 @@ public:
 	
 	std::stack<Room> getGrid() const {return _grid;} ;
 	void addRoom(Room room) {_grid.push(room); } ; 
+	Room getRoom(){return _grid.top();};
 	void createRoom() ; 
 
 private:

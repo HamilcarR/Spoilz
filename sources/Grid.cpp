@@ -27,7 +27,7 @@ Tile::~Tile(){
 
 bool Tile::changeType(Object &new_symbol){
 	_symbol = new_symbol ; 
-
+	return true ; 
 
 }
 
@@ -49,7 +49,6 @@ Room::Room(){
 
 
 	}
-	object_distrib = ObjectDistribution() ; 
 	generateRoom();
 }
 
@@ -85,14 +84,14 @@ static void put_gates(std::vector<std::vector<Tile>> &tiles) {
 	for(int i = 0 ; i < GRID_HEIGHT ; i++)
 		for(int j = 0 ; j < GRID_WIDTH ; j++){
 			float gate_proba = get_rand() ;
-			float secret_proba = get_rand() ; 
-			if(gate_proba < GATE_SPAWN_PROBA && max_gates < MAX_GATE_COUNT - 1){ //creates gates
+			float secret_proba = get_rand() ;
+			if(gate_proba < GATE_SPAWN_PROBA && max_gates < MAX_GATE_COUNT ){ //creates gates
 				gate_spawned = true ; 
 				Object gate(j , i , TILE_GATE) ; 
 				tiles[i][j] = gate ; 
 				max_gates ++ ; 
 			}
-			if(secret_proba < SECRET_GATE_SPAWN_PROBA && max_secret < MAX_SECRET_GATE_COUNT - 1){//creates secret gates
+			if(secret_proba < SECRET_GATE_SPAWN_PROBA && max_secret < MAX_SECRET_GATE_COUNT ){//creates secret gates
 				Object secret_gate(j , i , TILE_SECRET_GATE) ; 
 				tiles[i][j] = secret_gate ; 
 				max_secret ++ ; 
@@ -115,7 +114,7 @@ static void put_loot(std::vector<std::vector<Tile>> &tiles) {
 			if(tiles[j][i]._symbol.getType() == TILE_CLEAR){
 			
 				int loot_type = rand()%LOOT_TABLE.size()-1 ;
-				if(get_rand() < LOOT_PROBA && max_loot < MAX_LOOT_ROOM - 1 ){
+				if(get_rand() < LOOT_PROBA && max_loot < MAX_LOOT_ROOM  ){
 					Object loot = Object(j , i , LOOT_TABLE[loot_type]) ; 
 					tiles[i][j].changeType(loot);
 					max_loot++ ; 
@@ -171,7 +170,6 @@ Grid::~Grid(){
 void Grid::createRoom(){
 	Room room = Room() ; 
 	addRoom(room) ;
-	room.describe() ; 
 }
 
 

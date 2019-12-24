@@ -8,7 +8,7 @@
 #include <ctime> 
 #include <stack>
 #include <algorithm>
-
+#include <ncurses.h>
 
 
 
@@ -29,8 +29,32 @@ static float get_rand(){
 	
 	return ((float)rand()/(RAND_MAX))  ; 
 
+}
+
+
+static void init_curses(){
+	initscr();
 
 }
+
+static void end_curses(){
+	endwin() ; 
+
+}
+
+
+
+/*defines a position*/
+struct VECT{
+	int x ; 
+	int y ; 
+
+
+};
+
+
+/*What type of gui : curses or rendered*/
+typedef enum VIEW_MODE { VIEW_MODE_CURSES = 0 , VIEW_MODE_GUI  } VIEW_MODE; 
 
 /*defines the symbol of an object , and how it will be represented on screen 
  * used as indexes in array , 
@@ -53,10 +77,12 @@ typedef enum  GAME_SYMBOLS_ENUM {
 	TILE_1H_SWORD , 
 	TILE_2H_SWORD , 
 	TILE_SPIKED_GLOVES , 
+	TILE_PLAYER , 
+	TILE_ENNEMY , 
 	TILE_CLEAR   
 } GAME_SYMBOLS_ENUM; 
 
-static const char* SYMBOLS_CHAR =  "c#L/XGSCmMfFKjJB.";
+static const char* SYMBOLS_CHAR =  "c#L/XGSCmMfFKjJB@E.";
 
 
 //Error check for various operations : adding to data structure , retrieving etc
@@ -68,12 +94,13 @@ typedef enum  OPERATION_STATUS {
 
 static constexpr int MAX_GATE_COUNT = 2 ; // number of max gates in a room 
 static constexpr int MAX_SECRET_GATE_COUNT = 1 ; //secret stuff behind 
-static constexpr float GATE_SPAWN_PROBA = 0.5 ;  // probability of a gate spawning
+static constexpr float GATE_SPAWN_PROBA = 0.1 ;  // probability of a gate spawning
 static constexpr float SECRET_GATE_SPAWN_PROBA = 0.01 ; // probability that a secret gate appears
 static constexpr float LOOT_PROBA = 0.2 ; // probability some loot will appear 
 static constexpr int   MAX_LOOT_ROOM = 7 ;//Max number of loots in a room 
 /*Loot table*/
-static constexpr std::array<GAME_SYMBOLS_ENUM , 12> LOOT_TABLE = { TILE_CHEST , 
+static constexpr std::array<GAME_SYMBOLS_ENUM , LOOT_TABLE_SIZE> LOOT_TABLE = { 
+							       TILE_CHEST , 
 							       TILE_GOLD_COIN , 
 							       TILE_SILVER_COIN , 
 							       TILE_COPPER_COIN , 
@@ -84,10 +111,7 @@ static constexpr std::array<GAME_SYMBOLS_ENUM , 12> LOOT_TABLE = { TILE_CHEST ,
 							       TILE_MANA_POTION , 
 							       TILE_1H_SWORD ,
 							       TILE_2H_SWORD , 
-							       TILE_SPIKED_GLOVES
-
-
-					} ; 
+							       TILE_SPIKED_GLOVES} ; 
 
 
 
@@ -96,6 +120,12 @@ static constexpr std::array<GAME_SYMBOLS_ENUM , 12> LOOT_TABLE = { TILE_CHEST ,
 
 
 
+
+
+static constexpr int STATUS_MESSAGE_X = 30 ; 
+static constexpr int STATUS_MESSAGE_Y = 0 ;
+static constexpr int OFFSET_MAP_X = 0 ; 
+static constexpr int OFFSET_MAP_Y = 10 ; 
 
 
 
