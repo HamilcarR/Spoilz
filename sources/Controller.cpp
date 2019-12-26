@@ -51,21 +51,28 @@ static SYMBOLS_MAP create_symbol_map(std::vector<std::vector<Tile>> &tiles){
 void Controller::mainProgram(VIEW_MODE mode){ //main loop 	
 	_view->init(mode) ; 
 	int input = 0;
-	
+	_player.setPosX(3) ; 
+	_player.setPosY((int)(GRID_HEIGHT/2)) ; 
 	do{
 		
 		
-		//TODO IA control ;
-		std::string status_message = _player.processInput(input) ; 	
 		std::vector<std::vector<Tile>> tiles = _grid.getRoom().getTiles() ; 
-		SYMBOLS_MAP array = create_symbol_map(tiles); 
+		SYMBOLS_MAP array = create_symbol_map(tiles); 	
+		std::string status_message = _player.processInput(input , array ) ; 	
+
+		//TODO IA control ;
+						
 		_view->draw(array) ; 
 		_view->writeStatusMessage(status_message) ;
-		
+		if(_player.hasChangedRoom()){
+			_player.newRoom();	
+			_grid.createRoom();	
+		}
+
 
 	
 	}
-	while((input = getch()) != 27) ;//ESC key 
+	while((input = getch()) != 'q' ) ;
 
 
 

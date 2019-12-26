@@ -81,8 +81,8 @@ static void put_gates(std::vector<std::vector<Tile>> &tiles) {
 	bool gate_spawned = false ; 
 	int max_gates = 0 ; 
 	int max_secret = 0 ; 
-	for(int i = 0 ; i < GRID_HEIGHT ; i++)
-		for(int j = 0 ; j < GRID_WIDTH ; j++){
+	for(int i = 1 ; i < GRID_HEIGHT-1 ; i++)
+		for(int j = 1 ; j < GRID_WIDTH-1 ; j++){
 			float gate_proba = get_rand() ;
 			float secret_proba = get_rand() ;
 			if(gate_proba < GATE_SPAWN_PROBA && max_gates < MAX_GATE_COUNT ){ //creates gates

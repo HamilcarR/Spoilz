@@ -4,7 +4,7 @@
 #include "GameObjects.h" 
 #include "ObjectDistribution.h"
 
-static constexpr int GRID_WIDTH = 20 ; 
+static constexpr int GRID_WIDTH = 20; 
 static constexpr int GRID_HEIGHT = 20 ;
 
 /*tile type*/
@@ -35,7 +35,7 @@ public:
 	void generateRoom() ; 
 	void describe() ; 
 	
-	std::vector<std::vector<Tile>> getTiles(){return _tiles;} ; 
+	std::vector<std::vector<Tile>> getTiles() const {return _tiles;} ; 
 private:
 	std::vector<std::vector<Tile>> _tiles;
 };

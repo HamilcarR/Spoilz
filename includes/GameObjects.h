@@ -17,19 +17,19 @@ public:
 	virtual ~Object() ;
 
 	/*setters*/
-	virtual void setPosX(int newPos){_posX = newPos ; } ; 
-	virtual void setPosY(int newPos){_posY = newPos ; } ; 
-	virtual void setLife(int newLife){_life = newLife; } ; 
+	 void setPosX(int newPos){_posX = newPos ; } ; 
+	 void setPosY(int newPos){_posY = newPos ; } ; 
+	 void setLife(int newLife){_life = newLife; } ; 
 
 	/*getters*/
-	virtual int getPosX() const {return _posX ; } ; 
-	virtual int getPosY() const {return _posY ; } ; 
-	virtual int getLife() const {return _life ; } ; 
+	 int getPosX() const {return _posX ; } ; 
+	 int getPosY() const {return _posY ; } ; 
+	 int getLife() const {return _life ; } ; 
 	/*Object type*/
-	virtual  GAME_SYMBOLS_ENUM getType() const {return _type;} ;   
+	  GAME_SYMBOLS_ENUM getType() const {return _type;} ;   
 
 
-private:
+protected:
 	int _posX ; //position on columns 
 	int _posY ; //position on rows 
 	float _life ; // life of the object , everything is destructible	

@@ -8,7 +8,7 @@
 #include "PlayerControl.h"
 
 
-typedef std::vector<std::vector<GAME_SYMBOLS_ENUM>> SYMBOLS_MAP ; 
+
 class View ; 
 class Controller{
 public:

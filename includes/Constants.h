@@ -9,10 +9,10 @@
 #include <stack>
 #include <algorithm>
 #include <ncurses.h>
+#include <assert.h>
 
 
 
-#define LOOT_TABLE_SIZE 12
 
 
 
@@ -82,6 +82,34 @@ typedef enum  GAME_SYMBOLS_ENUM {
 	TILE_CLEAR   
 } GAME_SYMBOLS_ENUM; 
 
+
+
+
+
+static const char* OBJECT_DESCRIPTION[] = {
+	"Chest",
+	"Wall",
+	"Lava",
+	"Gate",
+	"Secret gate",
+	"Gold coin",
+	"Silver coin",
+	"Copper coin",
+	"One handed mace",
+	"Two handed mace",
+	"Food ration",
+	"Life potion",
+	"Mana potion",
+	"One handed sword",
+	"Two handed sword",
+	"Spiked gloves",
+	"Player",
+	"Ennemy",
+	"Regular soil" 
+
+};
+
+
 static const char* SYMBOLS_CHAR =  "c#L/XGSCmMfFKjJB@E.";
 
 
@@ -94,11 +122,13 @@ typedef enum  OPERATION_STATUS {
 
 static constexpr int MAX_GATE_COUNT = 2 ; // number of max gates in a room 
 static constexpr int MAX_SECRET_GATE_COUNT = 1 ; //secret stuff behind 
-static constexpr float GATE_SPAWN_PROBA = 0.1 ;  // probability of a gate spawning
-static constexpr float SECRET_GATE_SPAWN_PROBA = 0.01 ; // probability that a secret gate appears
-static constexpr float LOOT_PROBA = 0.2 ; // probability some loot will appear 
+static constexpr float GATE_SPAWN_PROBA = 0.01 ;  // probability of a gate spawning
+static constexpr float SECRET_GATE_SPAWN_PROBA = 0.001 ; // probability that a secret gate appears
+static constexpr float LOOT_PROBA = 0.002 ; // probability some loot will appear 
 static constexpr int   MAX_LOOT_ROOM = 7 ;//Max number of loots in a room 
 /*Loot table*/
+
+static constexpr unsigned int LOOT_TABLE_SIZE = 12 ;
 static constexpr std::array<GAME_SYMBOLS_ENUM , LOOT_TABLE_SIZE> LOOT_TABLE = { 
 							       TILE_CHEST , 
 							       TILE_GOLD_COIN , 
@@ -112,6 +142,7 @@ static constexpr std::array<GAME_SYMBOLS_ENUM , LOOT_TABLE_SIZE> LOOT_TABLE = {
 							       TILE_1H_SWORD ,
 							       TILE_2H_SWORD , 
 							       TILE_SPIKED_GLOVES} ; 
+
 
 
 

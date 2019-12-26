@@ -18,7 +18,6 @@ View::View(Controller *controller , VIEW_MODE mode){
 	_controller = controller ;
 	_curse = CurseView() ; 
 	_mode = mode ; 
-//	init_view() ; 
 }
 
 
@@ -54,6 +53,8 @@ void View::init(VIEW_MODE mode){
 	if(_mode == VIEW_MODE_CURSES){
 		initscr();
 		noecho();
+		raw(); 
+		keypad(stdscr , TRUE) ; 
 
 	}
 	else{
@@ -88,7 +89,6 @@ void View::writeStatusMessage(std::string& message){
 /********************************************************************************************************/
 
 CurseView::CurseView(){
-//	_window = newwin(DEFAULT_ROW , DEFAULT_COL , ORIGIN_Y , ORIGIN_X) ; 
 	_window = nullptr ; 
 
 }
