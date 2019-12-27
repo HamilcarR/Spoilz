@@ -41,7 +41,7 @@ void Controller::mainProgram(VIEW_MODE mode){ //main loop
 		std::vector<std::vector<Tile>> tiles = _grid.getRoom().getTiles() ; 
 		SYMBOLS_MAP array = create_symbol_map(tiles); 	
 		std::string status_message = _player.processInput(input , array ) ; 	
-		//TODO IA control ;						
+		std::string enemy_status_message = _enemy.processInput(_enemy.input() , array) ; 
 		_view->draw(array) ; 
 		_view->writeStatusMessage(status_message) ;
 		if(_player.hasChangedRoom()){

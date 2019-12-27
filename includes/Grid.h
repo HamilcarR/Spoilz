@@ -32,9 +32,7 @@ class Room{
 public:
 	Room();
 	virtual ~Room();
-	void generateRoom() ; 
-	void describe() ; 
-	
+	void generateRoom() ; 	
 	std::vector<std::vector<Tile>> getTiles() const {return _tiles;} ; 
 private:
 	std::vector<std::vector<Tile>> _tiles;

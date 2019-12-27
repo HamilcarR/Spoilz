@@ -6,6 +6,7 @@
 #include "GameObjects.h" 
 #include <ncurses.h>
 #include "PlayerControl.h"
+#include "EnemyEntity.h" 
 
 
 
@@ -24,7 +25,7 @@ private:
 	Grid _grid ;//add player and IA control 
 	View* _view ; //stack variable , not allocated 
 	PlayerControl _player ; 
-
+	EnemyEntity   _enemy ; 
 
 
 };

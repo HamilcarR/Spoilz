@@ -67,7 +67,7 @@ typedef enum  GAME_SYMBOLS_ENUM {
 	TILE_2H_SWORD , 
 	TILE_SPIKED_GLOVES , 
 	TILE_PLAYER , 
-	TILE_ENNEMY ,
+	TILE_ENEMY ,
 	TILE_CLEAR   
 } GAME_SYMBOLS_ENUM; 
 
@@ -93,13 +93,10 @@ static const char* OBJECT_DESCRIPTION[] = {
 	"Two handed sword",
 	"Spiked gloves",
 	"Player",
-	"Ennemy",
+	"Enemy",
 	" " 
 
 };
-
-
-static const char* SYMBOLS_CHAR =  "c#L/XGSCmMfFKjJB@E.";
 
 
 //Error check for various operations : adding to data structure , retrieving etc

@@ -55,6 +55,7 @@ OBJECTS_DIR   = ./
 SOURCES       = sources/Controller.cpp \
 		sources/EnemyEntity.cpp \
 		sources/EntityAI.cpp \
+		sources/EntityControl.cpp \
 		sources/GameObject.cpp \
 		sources/Grid.cpp \
 		sources/Inventory.cpp \
@@ -65,6 +66,7 @@ SOURCES       = sources/Controller.cpp \
 OBJECTS       = Controller.o \
 		EnemyEntity.o \
 		EntityAI.o \
+		EntityControl.o \
 		GameObject.o \
 		Grid.o \
 		Inventory.o \
@@ -324,6 +326,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		includes/Controller.h \
 		includes/EnemyEntity.h \
 		includes/EntityAI.h \
+		includes/EntityControl.h \
 		includes/GameObjects.h \
 		includes/Grid.h \
 		includes/Inventory.h \
@@ -332,6 +335,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		includes/View.h sources/Controller.cpp \
 		sources/EnemyEntity.cpp \
 		sources/EntityAI.cpp \
+		sources/EntityControl.cpp \
 		sources/GameObject.cpp \
 		sources/Grid.cpp \
 		sources/Inventory.cpp \
@@ -864,8 +868,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents includes/Constants.h includes/Controller.h includes/EnemyEntity.h includes/EntityAI.h includes/GameObjects.h includes/Grid.h includes/Inventory.h includes/ObjectDistribution.h includes/PlayerControl.h includes/View.h $(DISTDIR)/
-	$(COPY_FILE) --parents sources/Controller.cpp sources/EnemyEntity.cpp sources/EntityAI.cpp sources/GameObject.cpp sources/Grid.cpp sources/Inventory.cpp sources/main.cpp sources/ObjectDistribution.cpp sources/PlayerControl.cpp sources/View.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents includes/Constants.h includes/Controller.h includes/EnemyEntity.h includes/EntityAI.h includes/EntityControl.h includes/GameObjects.h includes/Grid.h includes/Inventory.h includes/ObjectDistribution.h includes/PlayerControl.h includes/View.h $(DISTDIR)/
+	$(COPY_FILE) --parents sources/Controller.cpp sources/EnemyEntity.cpp sources/EntityAI.cpp sources/EntityControl.cpp sources/GameObject.cpp sources/Grid.cpp sources/Inventory.cpp sources/main.cpp sources/ObjectDistribution.cpp sources/PlayerControl.cpp sources/View.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -923,7 +927,9 @@ Controller.o: sources/Controller.cpp includes/Controller.h \
 		includes/ObjectDistribution.h \
 		includes/PlayerControl.h \
 		includes/Inventory.h \
-		includes/EntityAI.h
+		includes/EntityAI.h \
+		includes/EntityControl.h \
+		includes/EnemyEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Controller.o sources/Controller.cpp
 
 EnemyEntity.o: sources/EnemyEntity.cpp includes/EnemyEntity.h \
@@ -933,11 +939,21 @@ EnemyEntity.o: sources/EnemyEntity.cpp includes/EnemyEntity.h \
 		includes/Inventory.h \
 		includes/Grid.h \
 		includes/ObjectDistribution.h \
-		includes/EntityAI.h
+		includes/EntityAI.h \
+		includes/EntityControl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EnemyEntity.o sources/EnemyEntity.cpp
 
 EntityAI.o: sources/EntityAI.cpp includes/EntityAI.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EntityAI.o sources/EntityAI.cpp
+
+EntityControl.o: sources/EntityControl.cpp includes/EntityControl.h \
+		includes/GameObjects.h \
+		includes/Constants.h \
+		includes/Inventory.h \
+		includes/Grid.h \
+		includes/ObjectDistribution.h \
+		includes/EntityAI.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EntityControl.o sources/EntityControl.cpp
 
 GameObject.o: sources/GameObject.cpp includes/GameObjects.h \
 		includes/Constants.h
@@ -962,7 +978,9 @@ main.o: sources/main.cpp includes/Constants.h \
 		includes/ObjectDistribution.h \
 		includes/PlayerControl.h \
 		includes/Inventory.h \
-		includes/EntityAI.h
+		includes/EntityAI.h \
+		includes/EntityControl.h \
+		includes/EnemyEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o sources/main.cpp
 
 ObjectDistribution.o: sources/ObjectDistribution.cpp includes/ObjectDistribution.h \
@@ -975,7 +993,8 @@ PlayerControl.o: sources/PlayerControl.cpp includes/PlayerControl.h \
 		includes/Inventory.h \
 		includes/Grid.h \
 		includes/ObjectDistribution.h \
-		includes/EntityAI.h
+		includes/EntityAI.h \
+		includes/EntityControl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PlayerControl.o sources/PlayerControl.cpp
 
 View.o: sources/View.cpp includes/View.h \
@@ -986,7 +1005,9 @@ View.o: sources/View.cpp includes/View.h \
 		includes/ObjectDistribution.h \
 		includes/PlayerControl.h \
 		includes/Inventory.h \
-		includes/EntityAI.h
+		includes/EntityAI.h \
+		includes/EntityControl.h \
+		includes/EnemyEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o View.o sources/View.cpp
 
 ####### Install

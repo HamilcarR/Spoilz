@@ -4,53 +4,13 @@
 
 
 
+/****************************************************************************************/
+PlayerControl::PlayerControl() : EntityControl(5 , 5 , 100 , TILE_PLAYER){
 
-PlayerControl::PlayerControl() : Object(5 , 5 , 100 , TILE_PLAYER){
-	_switched_room = false ;
-	_object_on_foot = TILE_PLAYER ; 
 }
-
 /****************************************************************************************/
 PlayerControl::~PlayerControl(){
 
-}
-
-/****************************************************************************************/
-void PlayerControl::moveup(SYMBOLS_MAP &tiles){
-	 int posY = getPosY() ; 
-	 int posX = getPosX() ;
-	 if( tiles[posY][posX-1] != TILE_WALL){
- 		setPosX(--posX) ;
-		_object_on_foot = tiles[posY][posX] ;
- 	}
-}
-
-/****************************************************************************************/
-void PlayerControl::movedown(SYMBOLS_MAP &tiles){
-	 int posY = getPosY() ; 
-	 int posX = getPosX() ; 
-	 if( tiles[posY][posX+1] != TILE_WALL){
- 		setPosX(++posX) ;
-		_object_on_foot = tiles[posY][posX] ; 
- 	}
-}
-/****************************************************************************************/
-void PlayerControl::moveleft(SYMBOLS_MAP &tiles){
-	 int posY = getPosY() ; 
-	 int posX = getPosX() ; 
-	 if( tiles[posY-1][posX] != TILE_WALL){
-		 setPosY(--posY) ;
-		_object_on_foot = tiles[posY][posX] ; 
- 	}
-}
-/****************************************************************************************/
-void PlayerControl::moveright(SYMBOLS_MAP &tiles){
-	 int posY = getPosY() ; 
-	 int posX = getPosX() ; 
-	 if( tiles[posY+1][posX] != TILE_WALL){
- 		setPosY(++posY) ;
-		_object_on_foot = tiles[posY][posX] ; 
-	 }
 }
 /****************************************************************************************/
 void PlayerControl::processObject(){

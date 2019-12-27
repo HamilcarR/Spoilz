@@ -2,18 +2,23 @@
 #define ENEMYENTITY_H
 #include "PlayerControl.h" 
 
-/*Enemy entity : has AI component _behavior*/
-class EnemyEntity: public PlayerControl{
+/*Enemy entity : 
+ * -Will detect the player if entering in his FOV 
+ * -Will try fight of flight , or seek objects
+ *
+ * */
+class EnemyEntity: public EntityControl {
 public:
 	EnemyEntity() ; 
-	std::string processInput(int input , SYMBOLS_MAP &tiles) ; //takes an input and the array with the position of the player in it 
-	
+	virtual ~EnemyEntity() ; 
+	std::string processInput(int input , SYMBOLS_MAP &tiles) ; 
+	int input() ; //provides inputs from the _behavior component ie , the AI algorithm  
+	void processObject()  ; 
 
 
 protected:
-	EntityAI _behavior ; 
-	
-
+	EntityAI _behavior ; //AI behavior : Path tracing + A* algorithm 
+	Object *_target ; // Actual target of the Enemy : can be the player , or an object to equip. 
 
 };
 

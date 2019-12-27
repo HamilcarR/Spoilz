@@ -128,16 +128,6 @@ void Room::generateRoom(){
 
 }
 /****************************************************************************************/
-void Room::describe(){
-
-	for(auto A : _tiles){
-		std::cout << "\n" ; 
-		for(auto B : A)
-			std::cout << SYMBOLS_CHAR[B._symbol.getType()] <<" " ;  
-		
-	}
-}
-/****************************************************************************************/
 Grid::Grid(){
 	initialize_rand();
 	createRoom();
