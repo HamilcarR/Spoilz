@@ -8,19 +8,14 @@
 PlayerControl::PlayerControl() : Object(5 , 5 , 100 , TILE_PLAYER){
 	_switched_room = false ;
 	_object_on_foot = TILE_PLAYER ; 
-
 }
 
-
+/****************************************************************************************/
 PlayerControl::~PlayerControl(){
 
-
-
-
 }
 
-
-
+/****************************************************************************************/
 void PlayerControl::moveup(SYMBOLS_MAP &tiles){
 	 int posY = getPosY() ; 
 	 int posX = getPosX() ;
@@ -30,6 +25,7 @@ void PlayerControl::moveup(SYMBOLS_MAP &tiles){
  	}
 }
 
+/****************************************************************************************/
 void PlayerControl::movedown(SYMBOLS_MAP &tiles){
 	 int posY = getPosY() ; 
 	 int posX = getPosX() ; 
@@ -37,10 +33,8 @@ void PlayerControl::movedown(SYMBOLS_MAP &tiles){
  		setPosX(++posX) ;
 		_object_on_foot = tiles[posY][posX] ; 
  	}
-
 }
-
-
+/****************************************************************************************/
 void PlayerControl::moveleft(SYMBOLS_MAP &tiles){
 	 int posY = getPosY() ; 
 	 int posX = getPosX() ; 
@@ -48,37 +42,24 @@ void PlayerControl::moveleft(SYMBOLS_MAP &tiles){
 		 setPosY(--posY) ;
 		_object_on_foot = tiles[posY][posX] ; 
  	}
-
 }
-
-
+/****************************************************************************************/
 void PlayerControl::moveright(SYMBOLS_MAP &tiles){
 	 int posY = getPosY() ; 
 	 int posX = getPosX() ; 
 	 if( tiles[posY+1][posX] != TILE_WALL){
  		setPosY(++posY) ;
 		_object_on_foot = tiles[posY][posX] ; 
- 	
 	 }
-
-
-
 }
-
-
-
-
-
-void PlayerControl::process_object(){
-
-
-
+/****************************************************************************************/
+void PlayerControl::processObject(){
+	if(_object_on_foot == TILE_GATE)
+		_switched_room = true ; 
+	else if(_object_on_foot != TILE_GATE && _object_on_foot != TILE_CLEAR)
+			_inventory.add(_object_on_foot) ; 
 }
-
-
-
-
-
+/****************************************************************************************/
 std::string PlayerControl::processInput(int n , SYMBOLS_MAP &tiles){
 	std::string message ="" ;
 
@@ -100,10 +81,8 @@ std::string PlayerControl::processInput(int n , SYMBOLS_MAP &tiles){
 		break;
 		
 		case SHORTCUT_USE :
-			process_object() ; 
+			processObject() ; 
 		break;
-
-
 	}
 
 	tiles[getPosY()][getPosX()] = TILE_PLAYER ;

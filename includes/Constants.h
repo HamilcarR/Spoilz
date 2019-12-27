@@ -32,17 +32,6 @@ static float get_rand(){
 }
 
 
-static void init_curses(){
-	initscr();
-
-}
-
-static void end_curses(){
-	endwin() ; 
-
-}
-
-
 
 /*defines a position*/
 struct VECT{
@@ -78,14 +67,14 @@ typedef enum  GAME_SYMBOLS_ENUM {
 	TILE_2H_SWORD , 
 	TILE_SPIKED_GLOVES , 
 	TILE_PLAYER , 
-	TILE_ENNEMY , 
+	TILE_ENNEMY ,
 	TILE_CLEAR   
 } GAME_SYMBOLS_ENUM; 
 
 
 
 
-
+/*use that for status message*/
 static const char* OBJECT_DESCRIPTION[] = {
 	"Chest",
 	"Wall",
@@ -105,7 +94,7 @@ static const char* OBJECT_DESCRIPTION[] = {
 	"Spiked gloves",
 	"Player",
 	"Ennemy",
-	"Regular soil" 
+	" " 
 
 };
 
@@ -122,12 +111,14 @@ typedef enum  OPERATION_STATUS {
 
 static constexpr int MAX_GATE_COUNT = 2 ; // number of max gates in a room 
 static constexpr int MAX_SECRET_GATE_COUNT = 1 ; //secret stuff behind 
+static constexpr float WALL_SPAWN_PROBA = 0.1 ; 
 static constexpr float GATE_SPAWN_PROBA = 0.01 ;  // probability of a gate spawning
 static constexpr float SECRET_GATE_SPAWN_PROBA = 0.001 ; // probability that a secret gate appears
+static constexpr float TRAP_SPAWN_PROBA = 0.01 ; //probability of a trap spawning on the map
 static constexpr float LOOT_PROBA = 0.002 ; // probability some loot will appear 
 static constexpr int   MAX_LOOT_ROOM = 7 ;//Max number of loots in a room 
-/*Loot table*/
 
+/*Loot table*/
 static constexpr unsigned int LOOT_TABLE_SIZE = 12 ;
 static constexpr std::array<GAME_SYMBOLS_ENUM , LOOT_TABLE_SIZE> LOOT_TABLE = { 
 							       TILE_CHEST , 
@@ -144,19 +135,11 @@ static constexpr std::array<GAME_SYMBOLS_ENUM , LOOT_TABLE_SIZE> LOOT_TABLE = {
 							       TILE_SPIKED_GLOVES} ; 
 
 
+/*maximum numbers of objects the player can carry at the beginning */
+static unsigned int constexpr START_INV_CAPACITY = 10 ; 
 
 
 
-
-
-
-
-
-
-static constexpr int STATUS_MESSAGE_X = 30 ; 
-static constexpr int STATUS_MESSAGE_Y = 0 ;
-static constexpr int OFFSET_MAP_X = 0 ; 
-static constexpr int OFFSET_MAP_Y = 10 ; 
 
 
 

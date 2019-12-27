@@ -2,41 +2,26 @@
 
 Tile::Tile(){
 	_symbol = Object(0 , 0 , TILE_CLEAR) ; 
-
 }
-
+/****************************************************************************************/
 Tile::Tile(Object &sym){
 	_symbol = sym ; 
-
-
 }
-
-
+/****************************************************************************************/
 Tile::Tile(const Tile& tile){
 	_symbol = tile._symbol ; 
-
-
 }
-
-
-
+/****************************************************************************************/
 Tile::~Tile(){
 
-
 }
-
+/****************************************************************************************/
 bool Tile::changeType(Object &new_symbol){
 	_symbol = new_symbol ; 
 	return true ; 
 
 }
-
-
-
 /****************************************************************************************************/
-
-
-
 Room::Room(){
 
 	_tiles = std::vector<std::vector<Tile>>() ; 
@@ -46,18 +31,14 @@ Room::Room(){
 			Object object(j , i , TILE_CLEAR) ; 
 			_tiles[i].push_back(object) ; 
 		}
-
-
 	}
 	generateRoom();
 }
-
-
+/****************************************************************************************/
 Room::~Room(){
 
-
 }
-
+/****************************************************************************************/
 /*places a wall around the room*/
 static void put_walls(std::vector<std::vector<Tile>> &tiles) {
 	for(int i = 0 ; i < GRID_WIDTH ; i++){
@@ -72,10 +53,15 @@ static void put_walls(std::vector<std::vector<Tile>> &tiles) {
 		tiles[i][GRID_WIDTH-1].changeType(object); 
 
 	}
-
-
+	for(int i = 1 ; i < GRID_HEIGHT-1 ; i++)
+		for(int j = 1 ; j < GRID_WIDTH-1 ; j++){
+			if(tiles[j][i]._symbol.getType() == TILE_CLEAR && get_rand() < WALL_SPAWN_PROBA){
+				Object wall(j , i , TILE_WALL) ; 
+				tiles[i][j] = wall ; 
+			}
+		}
 }
-
+/****************************************************************************************/
 /*randomly spawn 2 gates max and maybe one secret gate*/
 static void put_gates(std::vector<std::vector<Tile>> &tiles) {
 	bool gate_spawned = false ; 
@@ -95,23 +81,21 @@ static void put_gates(std::vector<std::vector<Tile>> &tiles) {
 				Object secret_gate(j , i , TILE_SECRET_GATE) ; 
 				tiles[i][j] = secret_gate ; 
 				max_secret ++ ; 
-
 			}
 		}
 	if(!gate_spawned){
-	Object gate((int)(GRID_WIDTH/2) , 0 , TILE_GATE);
-	tiles[0][(int) (GRID_WIDTH/2) ].changeType(gate) ; 
+		Object gate((int)(GRID_WIDTH/2) , 0 , TILE_GATE);
+		tiles[0][(int) (GRID_WIDTH/2) ].changeType(gate) ; 
 	}
 }
-
-
+/****************************************************************************************/
 /*randomly spawn maximum MAX_LOOT_ROOM loots , only on free tiles */
 static void put_loot(std::vector<std::vector<Tile>> &tiles) {
 	int max_loot = 0 ; 
 	for(int i = 0 ; i < GRID_HEIGHT ; i++)
 		for(int j = 0 ; j < GRID_WIDTH ; j++){
 
-			if(tiles[j][i]._symbol.getType() == TILE_CLEAR){
+			if(tiles[i][j]._symbol.getType() == TILE_CLEAR){
 			
 				int loot_type = rand()%LOOT_TABLE.size()-1 ;
 				if(get_rand() < LOOT_PROBA && max_loot < MAX_LOOT_ROOM  ){
@@ -120,58 +104,54 @@ static void put_loot(std::vector<std::vector<Tile>> &tiles) {
 					max_loot++ ; 
 				}
 			}
-				
-
 		}
-
 }
-
-
-
+/****************************************************************************************/
+static void put_traps(std::vector<std::vector<Tile>> &tiles){
+	for(int i = 1 ; i < GRID_HEIGHT-1 ; i++){
+		for(int j = 1 ; j < GRID_WIDTH-1 ; j++){
+			if(tiles[i][j]._symbol.getType() == TILE_CLEAR){
+				if(get_rand() < TRAP_SPAWN_PROBA){
+					Object trap = Object(j , i , TILE_LAVA); 
+					tiles[i][j].changeType(trap); 
+				}
+			}
+		}
+	}
+}
+/****************************************************************************************/
 void Room::generateRoom(){
 	put_walls(_tiles); 
 	put_gates(_tiles); 
-	put_loot(_tiles) ; 
+	put_loot(_tiles) ;
+	put_traps(_tiles) ; 
 
 }
-
-
-
-
+/****************************************************************************************/
 void Room::describe(){
 
 	for(auto A : _tiles){
 		std::cout << "\n" ; 
-		for(auto B : A){
-		std::cout << SYMBOLS_CHAR[B._symbol.getType()] <<" " ;  
-		}
+		for(auto B : A)
+			std::cout << SYMBOLS_CHAR[B._symbol.getType()] <<" " ;  
+		
 	}
-
 }
-
-
-/****************************************************************************************************/
-
-
-
-
+/****************************************************************************************/
 Grid::Grid(){
-
 	initialize_rand();
 	createRoom();
-
 }
-
+/****************************************************************************************/
 Grid::~Grid(){
 
-
 }
-
+/****************************************************************************************/
 void Grid::createRoom(){
 	Room room = Room() ; 
 	addRoom(room) ;
 }
-
+/****************************************************************************************/
 
 
 

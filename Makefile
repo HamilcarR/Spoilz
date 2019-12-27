@@ -16,7 +16,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -std=c++17 -g -Wall -Wextra -pedantic -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -std=c++17 -g -Wall -Wextra -pedantic -Wno-unused-function -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
@@ -53,6 +53,8 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = sources/Controller.cpp \
+		sources/EnemyEntity.cpp \
+		sources/EntityAI.cpp \
 		sources/GameObject.cpp \
 		sources/Grid.cpp \
 		sources/Inventory.cpp \
@@ -61,6 +63,8 @@ SOURCES       = sources/Controller.cpp \
 		sources/PlayerControl.cpp \
 		sources/View.cpp 
 OBJECTS       = Controller.o \
+		EnemyEntity.o \
+		EntityAI.o \
 		GameObject.o \
 		Grid.o \
 		Inventory.o \
@@ -318,12 +322,16 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		Hack.pro includes/Constants.h \
 		includes/Controller.h \
+		includes/EnemyEntity.h \
+		includes/EntityAI.h \
 		includes/GameObjects.h \
 		includes/Grid.h \
 		includes/Inventory.h \
 		includes/ObjectDistribution.h \
 		includes/PlayerControl.h \
 		includes/View.h sources/Controller.cpp \
+		sources/EnemyEntity.cpp \
+		sources/EntityAI.cpp \
 		sources/GameObject.cpp \
 		sources/Grid.cpp \
 		sources/Inventory.cpp \
@@ -856,8 +864,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents includes/Constants.h includes/Controller.h includes/GameObjects.h includes/Grid.h includes/Inventory.h includes/ObjectDistribution.h includes/PlayerControl.h includes/View.h $(DISTDIR)/
-	$(COPY_FILE) --parents sources/Controller.cpp sources/GameObject.cpp sources/Grid.cpp sources/Inventory.cpp sources/main.cpp sources/ObjectDistribution.cpp sources/PlayerControl.cpp sources/View.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents includes/Constants.h includes/Controller.h includes/EnemyEntity.h includes/EntityAI.h includes/GameObjects.h includes/Grid.h includes/Inventory.h includes/ObjectDistribution.h includes/PlayerControl.h includes/View.h $(DISTDIR)/
+	$(COPY_FILE) --parents sources/Controller.cpp sources/EnemyEntity.cpp sources/EntityAI.cpp sources/GameObject.cpp sources/Grid.cpp sources/Inventory.cpp sources/main.cpp sources/ObjectDistribution.cpp sources/PlayerControl.cpp sources/View.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -887,7 +895,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
-	g++ -pipe -std=c++17 -g -Wall -Wextra -pedantic -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
+	g++ -pipe -std=c++17 -g -Wall -Wextra -pedantic -Wno-unused-function -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all:
 compiler_moc_header_clean:
@@ -914,8 +922,22 @@ Controller.o: sources/Controller.cpp includes/Controller.h \
 		includes/GameObjects.h \
 		includes/ObjectDistribution.h \
 		includes/PlayerControl.h \
-		includes/Inventory.h
+		includes/Inventory.h \
+		includes/EntityAI.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Controller.o sources/Controller.cpp
+
+EnemyEntity.o: sources/EnemyEntity.cpp includes/EnemyEntity.h \
+		includes/PlayerControl.h \
+		includes/GameObjects.h \
+		includes/Constants.h \
+		includes/Inventory.h \
+		includes/Grid.h \
+		includes/ObjectDistribution.h \
+		includes/EntityAI.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EnemyEntity.o sources/EnemyEntity.cpp
+
+EntityAI.o: sources/EntityAI.cpp includes/EntityAI.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EntityAI.o sources/EntityAI.cpp
 
 GameObject.o: sources/GameObject.cpp includes/GameObjects.h \
 		includes/Constants.h
@@ -939,7 +961,8 @@ main.o: sources/main.cpp includes/Constants.h \
 		includes/Grid.h \
 		includes/ObjectDistribution.h \
 		includes/PlayerControl.h \
-		includes/Inventory.h
+		includes/Inventory.h \
+		includes/EntityAI.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o sources/main.cpp
 
 ObjectDistribution.o: sources/ObjectDistribution.cpp includes/ObjectDistribution.h \
@@ -949,7 +972,10 @@ ObjectDistribution.o: sources/ObjectDistribution.cpp includes/ObjectDistribution
 PlayerControl.o: sources/PlayerControl.cpp includes/PlayerControl.h \
 		includes/GameObjects.h \
 		includes/Constants.h \
-		includes/Inventory.h
+		includes/Inventory.h \
+		includes/Grid.h \
+		includes/ObjectDistribution.h \
+		includes/EntityAI.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PlayerControl.o sources/PlayerControl.cpp
 
 View.o: sources/View.cpp includes/View.h \
@@ -959,7 +985,8 @@ View.o: sources/View.cpp includes/View.h \
 		includes/GameObjects.h \
 		includes/ObjectDistribution.h \
 		includes/PlayerControl.h \
-		includes/Inventory.h
+		includes/Inventory.h \
+		includes/EntityAI.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o View.o sources/View.cpp
 
 ####### Install

@@ -19,7 +19,7 @@ class CurseView {
 		void draw(SYMBOLS_MAP &room) ; 
 		void writeStatusMessage(std::string& message) ; 
 		void end(); 		
-
+		
 
 	private:
 		WINDOW * _window ; 

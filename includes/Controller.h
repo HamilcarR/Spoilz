@@ -10,19 +10,19 @@
 
 
 class View ; 
+
 class Controller{
 public:
 	Controller(View* view );
 	virtual ~Controller(); 	
 	void mainProgram(VIEW_MODE mode); 	
-
-
 private:
-
 	void initIA() ; 
 	
+
+	
 	Grid _grid ;//add player and IA control 
-	View* _view ; //stack variable 
+	View* _view ; //stack variable , not allocated 
 	PlayerControl _player ; 
 
 
